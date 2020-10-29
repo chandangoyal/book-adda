@@ -1,0 +1,507 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="appFilereader">
+<head>
+<title>Book-adda</title>
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="google-signin-client_id" content="381428981725-b72d44hs3ebkbo11pout2lonh6mhti1u.apps.googleusercontent.com">
+    <script data-require="angular.js@1.2.0" data-semver="1.2.0" src="https://code.angularjs.org/1.2.0/angular.js"></script>
+    <script src="javascripts/core.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>
+    <style>
+        * {box-sizing:border-box}
+        body {font-family: Verdana,sans-serif;margin:0}
+
+
+        /* Slideshow container */
+        .slideshow-container {
+            width: 100%;
+            position: absolute;
+            margin: auto;
+            z-index: 10;
+        }
+
+        .img1{
+            height: 500px;
+        }
+
+	.modal {
+           /* display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1;*/ /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            /*left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%;*/ /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        /* Modal Content */
+        .modal-content {
+            /*position: relative;
+            margin: auto;
+            padding: 0;
+            border: 1px solid #888;
+            width: 35%;*/
+		background-color: #fefefe;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+            -webkit-animation-name: animatetop;
+            -webkit-animation-duration: 0.4s;
+            animation-name: animatetop;
+            animation-duration: 0.4s
+        }
+
+
+        /* Caption text */
+        .text {
+            color: #f2f2f2;
+            font-size: 15px;
+            padding: 8px 12px;
+            position: absolute;
+            top: 350px;
+            width: 100%;
+            text-align: center;
+        }
+        .signin{
+            color:white;
+            background-color:transparent;
+            position: absolute;
+            top: 10px;
+            right: 75px;
+        }
+        .btn-link:hover{
+
+            color: white;
+        }
+        .seller{
+            color:white;
+            background-color:transparent;
+            position: absolute;
+            top: 10px;
+            right: 150px;
+        }
+        .join{
+            color:white;
+            background-color:transparent;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+        }
+        /* Fading animation */
+        .fade {
+            -webkit-animation-name: fade;
+            -webkit-animation-duration: 2.5s;
+            animation-name: fade;
+            animation-duration: 2.5s;
+            animation-fill-mode:forwards
+        }
+
+        @-webkit-keyframes fade {
+            from {opacity: .7}
+            to {opacity: 1}
+        }
+
+        @keyframes fade {
+            from {opacity: .7}
+            to {opacity: 1}
+        }
+
+        /* On smaller screens, decrease text size */
+        @media only screen and (max-width: 600px){
+            .text {font-size: 11px}
+            .img1{height: 350px}
+            .text{top: 250px}
+        }
+        
+
+        /* Add Animation */
+        @-webkit-keyframes animatetop {
+            from {top:-300px; opacity:0}
+            to {top:0; opacity:1}
+        }
+
+        @keyframes animatetop {
+            from {top:-300px; opacity:0}
+            to {top:0; opacity:1}
+        }
+
+        /* The Close Button */
+        .close,.close2,.close3 {
+            color: green;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus,.close3:focus,.close3:hover,.close2:hover,.close2:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+            .image1 {
+
+                width: 300px;
+                height: 210px;
+
+            }
+
+        @media only screen and (max-width: 1100px){
+            .text {font-size: 12px}
+            .img1{height: 800px}
+            .text{top: 560px}
+
+
+        }
+        @media only screen and (max-width: 1100px){
+            .image1{height: 320px;
+                width: 260px;}
+/*.model-content{
+		width:40%;
+		}*/
+        }
+        @media only screen and (max-width: 800px){
+            .text {font-size: 11px}
+            .img1{height: 750px}
+            .text{top: 540px}
+	/*	.model-content{
+		width:75%;
+		}*/
+        }
+        @media only screen and (max-width: 800px){
+            .image1{height: 300px;
+                width: 220px;}
+		h3{
+			font-size:15px;
+		}
+        }
+@media only screen and (max-width: 500px){
+            .image1{height: 195px;
+                width: 143px;}
+		.img1{
+			height:440px;
+		}
+		h3{
+			font-size:13px;
+		}
+		.text{
+		top:300px;
+		font-size:8px;
+		}
+	/*	.model-content{
+		width:80%;
+		}*/
+        }
+        td{
+            padding: 0px;
+
+            text-align:center;
+        }
+        /*.modal-body {padding: 2px 16px;}*/
+        .or1 {
+            width: 100%;
+            text-align: center;
+            border-bottom: 1px solid grey;
+            line-height: 0.1em;
+            margin: 10px 0 20px;
+        }
+
+                .or1 .or2 {
+            background:#fff;
+            padding:0 10px;
+        }
+    </style>
+</head>
+<body id="body" ng-controller="mainController">
+
+<div class="slideshow-container" ng-init="checkcredentials()">
+
+
+
+    <div ng-init="findlatest()">
+<div class="fade">
+        <img src="images/book3.jpg" class="img img1 img-responsive" style="width:100%">
+</div>
+        <button type="button" id="myBtn3" class="btn btn-link seller">Sell Books</button>
+        <!-- The Modal -->
+        <div id="myModal3" class="modal">
+	<div class="modal-dialog">
+            <!-- Modal content -->
+            <div class="modal-content">
+		
+                <div class="modal-body">
+                    <span class="close3">&times;</span>
+                    <h2 style="text-align: center">
+                       Please Login First!</h2>
+                              <br>
+
+                </div>
+		</div>
+            </div>
+
+        </div>
+        <button id="myBtn" type="button" class="btn btn-link signin">Sign In</button>
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+<div class="modal-dialog">
+            <!-- Modal content -->
+            <div class="modal-content">
+
+                <div class="modal-body">
+                    <span class="close">&times;</span>
+                    <h2 style="text-align: center">
+                        Login</h2>
+                    <ng-form name="example">
+                    <div>
+                        <div class="form-group input-group-lg">
+
+                        <input type="email" placeholder="Email/Username" class="form-control" ng-required="true" ng-model="user.emailid">
+                    </div>
+                    <div class="form-group input-group-lg">
+                    <button type="button" ng-disabled="example.$invalid" class="btn btn-success form-control" ng-click="signin()">Continue</button>
+                    </div>
+                    </div>
+                    </ng-form>
+                    <br>
+                    <div class="or1"><span class="or2">or</span></div><br>
+<center>
+                    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="light" data-size="tall"></div>
+</center>
+                    <br>
+                    <h5 style="text-align: center">{{user.info1}}</h5>
+                </div>
+
+            </div>
+</div>
+        </div>
+        <button id="myBtn2" type="button" class="btn btn-link join">Join</button>
+        <div id="myModal2" class="modal">
+	<div class="modal-dialog">
+            <!-- Modal content -->
+            <div class="modal-content">
+
+                <div class="modal-body">
+                    <span class="close2">&times;</span>
+                    <h2 style="text-align: center">Signup</h2>
+                    <ng-form name="exampleForm">
+                    <div>
+                        <div class="form-group input-group-lg">
+
+                            <input type="text" placeholder="Enter Name" class="form-control" ng-required="true" ng-model="user.uname">
+                        </div>
+                        <div class="form-group input-group-lg">
+
+                            <input type="email" placeholder="Enter Emailid" class="form-control" ng-required="true" ng-model="user.emailid">
+                        </div>
+                        <div class="form-group input-group-lg">
+                            <button type="button" ng-disabled="exampleForm.$invalid" class="btn btn-success form-control" ng-click="join()">Continue</button>
+                        </div>
+                    </div>
+                    </ng-form>
+                    <br>
+                    <div class="or1"><span class="or2">or</span></div><br>
+                    <center>
+                        <div class="g-signin2" data-onsuccess="onSignIn" data-theme="light" data-size="tall"></div>
+                    </center>
+                    <br>
+                    <h5 style="text-align: center">{{user.info}}</h5>
+                </div>
+            </div>
+</div>
+        </div>
+        <div class="text">
+            <form class="col-sm-12" id="searchForm">
+                <div class="form-group col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
+                    <div class="input-group input-group-lg">
+                        <input type="text" id="search" class="form-control" ng-model="formData.search2" placeholder="Which books you looking for?">
+                        <span class="input-group-addon"><i id="search2" class="glyphicon glyphicon-search" ng-click="store()"></i>
+                        </span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div style="text-align: center">
+    <h2>
+
+        Explore The Books</h2>
+    <div class="table-responsive">
+        <table class="table table-condensed" style="border-color: aliceblue">
+
+            <tr>
+
+               <!-- <td><a href="index3.html" ng-click="savecategory1()"><h3 style="text-align:center;color: grey">Engineering</h3>
+                    <img class="img image1 img-responsive" src="images/engineering.jpg" alt="No image"></a>
+                </td>
+                <td><a href="index3.html" ng-click="savecategory2()"><h3 style="text-align:center;color: grey">Management</h3>
+                    <img class="img image1 img-responsive" src="images/management.png" alt="No image"></a>
+                </td>
+                <td><a href="index3.html" ng-click="savecategory3()"><h3 style="text-align:center;color: grey">Novels</h3>
+                    <img class="img image1 image-responsive" src="images/novels.jpg" alt="No image"></a>
+                </td>-->
+                <td><a href="index3.html" ng-click="savecategory1()"><h3 style="text-align:center;color: grey">Engineering</h3>
+                    <img class="img image1 image-responsive" src="images/engineering.jpg" alt="No image"></a>
+                </td>
+                <td><a href="index3.html" ng-click="savecategory2()"><h3 style="text-align:center;color: grey">Management</h3>
+                    <img class="img image1 image-responsive" src="images/managementnew.jpg" alt="No image"></a>
+                </td>
+                <td><a href="index3.html" ng-click="savecategory3()"><h3 style="text-align:center;color: grey">Novels</h3>
+                    <img class="img image1 image-responsive" src="images/novels.jpg" alt="No image"></a>
+                </td>
+            </tr>
+            <tr>
+                <td><a href="index3.html" ng-click="savecategory4()"><h3 style="text-align:center;color: grey">G.K</h3>
+                    <img class="img image1 image-responsive" src="images/general.png" alt="No image"></a>
+                </td>
+                <td><a href="index3.html" ng-click="savecategory5()"><h3 style="text-align:center;color: grey">Competitive</h3>
+                    <img class="img image1 image-responsive" src="images/competitive.jpg" alt="No image"></a>
+                </td>
+                <td><a href="index3.html" ng-click="savecategory6()"><h3 style="text-align:center;color: grey">Others</h3>
+                    <img class="img image1 image-responsive" src="images/other.png" alt="No image"></a>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+    </div>
+    <br>
+    <div style="text-align: center">
+    <h2 style="color: grey">
+
+    Trending</h2>
+    <div class="table-responsive">
+        <table class="table table-condensed">
+
+<tr>
+                <td><a href="details.html" ng-click="details(ifirst)">
+                    <img class="img image1 image-responsive" ng-src="{{ifirst.path}}" alt="No image"></a>
+                </td>
+    <td><a href="details.html" ng-click="details(itwo)">
+        <img class="img image1 image-responsive" ng-src="{{itwo.path}}" alt="No image"></a>
+        </td>
+    <td><a href="details.html" ng-click="details(ithree)">
+        <img class="img image1 image-responsive" ng-src="{{ithree.path}}" alt="No image"></a>
+        </td>
+</tr>
+            <tr>
+                <td><a href="details.html" ng-click="details(ifour)">
+                    <img class="img image1 image-responsive" ng-src="{{ifour.path}}" alt="No image"></a>
+                    </td>
+                <td><a href="details.html" ng-click="details(ifive)">
+                    <img class="img image1 image-responsive" ng-src="{{ifive.path}}" alt="No image"></a>
+                    </td>
+                <td><a href="details.html" ng-click="details(isix)">
+                    <img class="img image1 image-responsive" ng-src="{{isix.path}}" alt="No image"></a>
+                    </td>
+            </tr>
+
+        </table>
+    </div>
+    </div>
+</div>
+
+
+
+<script>
+    $(document).ready(function(){
+        $('#search').keypress(function(e){
+            if(e.keyCode==13)
+                $('#search2').click();
+        });
+    });
+    // Get the modal
+    var modal = document.getElementById('myModal');
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    var modal3 = document.getElementById('myModal3');
+
+    // Get the button that opens the modal
+    var btn3 = document.getElementById("myBtn3");
+
+    // Get the <span> element that closes the modal
+    var span3 = document.getElementsByClassName("close3")[0];
+
+    // When the user clicks the button, open the modal
+    btn3.onclick = function() {
+        modal3.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span3.onclick = function() {
+        modal3.style.display = "none";
+    }
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+            if (event.target == modal2) {
+                modal2.style.display = "none";
+            }
+        if (event.target == modal3) {
+            modal3.style.display = "none";
+        }
+
+    }
+
+    var modal2 = document.getElementById('myModal2');
+
+    // Get the button that opens the modal
+    var btn2 = document.getElementById("myBtn2");
+
+    // Get the <span> element that closes the modal
+    var span2 = document.getElementsByClassName("close2")[0];
+
+    // When the user clicks the button, open the modal
+    btn2.onclick = function() {
+        modal2.style.display = "block";
+
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span2.onclick = function() {
+        modal2.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+
+    function signOut() {
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+            console.log('User signed out.');
+        });
+    }
+    function onSignIn(googleUser) {
+        var profile = googleUser.getBasicProfile();
+        var scope = angular.element(document.getElementById("body")).scope();
+        scope.profile1(profile);
+        console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+        console.log('Name: ' + profile.getName());
+        console.log('Image URL: ' + profile.getImageUrl());
+        console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+    }
+</script>
+</body>
+</html>

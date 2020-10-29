@@ -1,0 +1,332 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="appFilereader">
+<head>
+<title>Old Books</title>
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+
+    <!--<script src="https://apis.google.com/js/platform.js" async defer></script>-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="google-signin-client_id" content="381428981725-b72d44hs3ebkbo11pout2lonh6mhti1u.apps.googleusercontent.com">
+    <script data-require="angular.js@1.2.0" data-semver="1.2.0" src="https://code.angularjs.org/1.2.0/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>
+    <script src="javascripts/core.js"></script>
+    <style>
+        .text {
+            color: #f2f2f2;
+            font-size: 15px;
+            background-color: black;
+            padding: 8px 8px 8px;
+            position: absolute;
+            width: 100%;
+            text-align: center;
+        }
+        .image{
+            padding-left: 20px;
+            width: 350px;
+            height:270px;
+
+        }
+        .sidenav {
+            height: auto; /* 100% Full-height */
+            width: auto; /* 0 width - change this with JavaScript */
+            /* Stay in place */
+            z-index: 1; /* Stay on top */
+            top: 0;
+            left: 0;
+            background-color: white; /* Black*/
+            overflow-x: hidden; /* Disable horizontal scroll */
+            padding-top: 60px; /* Place content 60px from the top */
+            transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+        }
+
+        /* The navigation menu links */
+        .sidenav{
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.3s
+        }
+
+        /* When you mouse over the navigation links, change their color */
+        .sidenav a:hover, .offcanvas a:focus{
+            color: #f1f1f1;
+        }
+
+        /* Position and style the close button (top right corner) */
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0px;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+.closebtn{
+    color: #818181;
+    position: relative;
+}
+        /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+
+
+        /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+        @media screen and (max-height: 450px) {
+            .sidenav {padding-top: 15px;}
+            .sidenav a {font-size: 18px;}
+        }
+
+        .close,.close2 {
+            color: grey;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .td1{
+            text-align: left;
+	width:370px;
+        }
+        .td2{
+            text-align: left;
+        }
+	.tit{
+		text-transform:capitalize;
+	}
+        table{
+            border-collapse: collapse;
+           /* width:auto;*/
+        }
+        .close:hover,
+        .close:focus,.close2:hover,.close2:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        #t1{
+            display: none;
+        }
+        #open{
+            size: 50px;
+            display: none;
+        }
+        #close{
+            display: none;
+        }
+        @media only screen and (max-width: 1100px){
+            .text {font-size: 11px}
+            .image{height: 520px;
+                width: 440px;
+            padding-left: 5px;}
+.td1{
+            text-align: left;
+	width:450px;
+        }
+
+        }
+        @media only screen and (max-width: 800px){
+            .text {font-size: 11px}
+            .image{height: 410px;
+                width: 300px;
+            padding-left: 0px;}
+.td1{
+            text-align: left;
+		width:305px;
+
+        }
+
+h1{
+font-size:13px;
+}
+h2{
+font-size:12px;
+}
+h3{
+font-size:11px;
+}
+h4{
+font-size:10px;
+}
+h5{
+font-size:8px;
+}
+        }
+@media only screen and (max-width: 500px){
+            .text {font-size: 11px}
+            .image{height: 290px;
+                width: 180px;
+            padding-left: 0px;}
+.td1{
+            text-align: left;
+		width:180px;
+        }
+
+h1{
+font-size:11px;
+}
+h2{
+font-size:10px;
+}
+h3{
+font-size:9px;
+}
+h4{
+font-size:8px;
+}
+h5{
+font-size:6px;
+}
+        }
+    </style>
+</head>
+<body ng-controller="mainController" id="body">
+
+    <div class="text" ng-init="refresh()">
+        <form id="searchForm">
+            <div class="row">
+            <div class="form-group col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-5 col-lg-offset-2 col-xs-10 col-xs-offset-1">
+                <div class="input-group input-group-lg">
+                    <input type="text" id="search" class="form-control" placeholder="Search books" ng-model="formData.search">
+
+                    <span class="input-group-addon"><i id="search2" class="glyphicon glyphicon-search" ng-click="find()"></i>
+                </span>
+                </div>
+
+            </div>
+<br>
+
+
+        <div class="col-md-3 col-md-offset-2 col-lg-1 col-lg-offset-1 col-sm-4 col-sm-offset-0 col-xs-3 col-xs-offset-2">
+            <a href="cart.html" ng-if="formData.user"><h4 style="color:aqua;">My Cart</h4></a>
+
+    </div>  <div class="col-md-4 col-md-offset-0 col-lg-2 col-lg-offset-0 col-sm-4 col-sm-offset-0 col-xs-4 col-xs-offset-0">
+                <a href="index.html" ng-if="formData.user"><h4 style="color:aqua;">Sell Books</h4></a>
+            </div>
+                <div class="col-md-3 col-md-offset-0 col-lg-1 col-lg-offset-0 col-sm-4 col-sm-offset-0 col-xs-3 col-xs-offset-0">
+                    <a href="#" onclick="signOut()" ng-if="formData.user" ng-click="signout()">
+                        <h4 style="color:aqua;">Sign Out</h4></a>
+                    <a href="index2.html" ng-hide="formData.user"><h4 style="color: aqua;">Sign in</h4></a>
+</div> </div> </form>
+    </div>
+
+    <div class="table-responsive">
+    <table class="table table-condensed td3">
+<br><br><br><br>
+        <tr><td id="t1">
+            <div class="sidenav" id="mySidenav">
+
+                <a href="javascript:void(0)" class="closebtn" id="close" onclick="closeNav()">&times;</a>
+            <h3>Category:</h3>
+                </span>
+            <ul style="list-style: none;padding: 0;margin: 0">
+                <li><button class="btn btn-link" ng-click="engineering()">Engineering Books</button></li>
+                <li><button class="btn btn-link" ng-click="management()">Management Books</button></li>
+                <li><button class="btn btn-link" ng-click="general()">General Knowledge</button></li>
+                <li><button class="btn btn-link" ng-click="competitive()">Competitive Exams</button></li>
+                <li><button class="btn btn-link" ng-click="novels()">Novels</button></li>
+                <li><button class="btn btn-link" ng-click="others()">Others</button></li>
+            </ul>
+
+            </div>
+        </td>
+            <button class="btn" id="open" onclick="openNav()"><br>&#9776;</button>
+            <div ng-hide="todo"><h3 style="text-align: center">No result found</h3></div>
+            <td>
+
+                <ul style="list-style: none;">
+
+                    <li ng-repeat="a in todo">
+                        <a href="details.html" ng-click="details(a)">
+                        <div class="table-responsive">
+                            <table class="table table-condensed table2">
+                               <td class="td1"> <img class="img image" ng-src="{{a.path}}" alt="No image Available"></td>
+<td class="td2"><h1>{{a.title}}</h1>
+    <h4><span ng-if="a.author">by</span> {{a.author}}</h4>
+<h5>{{a.type}}</h5>
+    <h3>Price :{{a.price}}Rs</h3>
+    <h3>Contact :{{a.contact}}</h3>
+    <h4>College/Location of Seller:{{a.location}}</h4>
+</td>
+                            </table>
+                        </div></a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+
+    </table>
+</div>
+<script>
+    $(document).ready(function(){
+        $('#search').keypress(function(e){
+            if(e.keyCode==13)
+                $('#search2').click();
+        });
+    });
+    if(screen.width>1100){
+        document.getElementById("t1").style.display = "block";
+
+    }
+    else{
+        document.getElementById("t1").style.display = "none";
+        document.getElementById("open").style.display = "block";
+        document.getElementById("open").style.size = "50px";
+    }
+    function openNav() {
+        document.getElementById("close").style.display = "block";
+        document.getElementById("close").style.color = "gray";
+        document.getElementById("close").style.position = "relative";
+        document.getElementById("close").style.height = "30px";
+        document.getElementById("close").style.right = "0px";
+        document.getElementById("mySidenav").style.backgroundColor = "aqua";
+        document.getElementById("t1").style.display = "block";
+
+
+    }
+    var moda = document.getElementById('t1');
+    var span = document.getElementsByClassName("close");
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        moda.style.display = "none";
+    }
+    clck=function () {
+
+        moda.style.display = "none";
+    }
+    window.onclick = function(event) {
+        //console.log(event.target)
+        if (event.target == moda) {
+            modal.style.display = "none";
+        }
+    }
+    function onLoad() {
+        gapi.load('auth2', function() {
+            gapi.auth2.init();
+        });
+    }
+    function signOut() {
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+            console.log('User signed out.');
+        });
+        var scope = angular.element(document.getElementById("body")).scope();
+        scope.signout();
+    }
+    /* Set the width of the side navigation to 0 and the left margin of the page content to 0, and the background color of body to white */
+    function closeNav() {
+        document.getElementById("t1").style.display = "none";
+        document.getElementById("close").style.display = "none";
+        document.body.style.backgroundColor = "white";
+    }
+    $(document).ready(function() {
+        function disableBack() { window.history.forward() }
+
+        window.onload = disableBack();
+        window.onpageshow = function(evt) { if (evt.persisted) disableBack() }
+    });
+</script>
+    <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+</body>
+</html>

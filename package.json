@@ -1,0 +1,28 @@
+{
+  "name": "oldbooks",
+  "version": "0.0.0",
+  "private": true,
+  "main":"app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "keywords": [
+  "old",
+  "books"
+],
+  "dependencies": {
+    "angular-file-model": "^0.3.1",
+    "body-parser": "*",
+    "express": "*",
+    "aws-sdk": "2.x",
+    "method-override": "^2.3.9",
+    "mongoose": "*",
+    "morgan": "~1.8.1",
+    "multer": "*",
+    "path": "*",
+    "serve-favicon": "~2.4.2"
+  },
+  "engines": {
+    "node": "v6.11.0"
+  }
+}

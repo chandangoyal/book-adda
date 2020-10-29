@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="appFilereader">
+<head>
+    <!-- META -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+
+    <title>Sell Books</title>
+
+    <!-- SCROLLS -->
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    <!-- load bootstrap -->
+    <style>
+        html                    { overflow-y:scroll; }
+        body                    { padding-top:50px; background-color: lightgray}
+        #todo-list              { margin-bottom:30px; }
+        .file {
+            visibility: hidden;
+            position: absolute;
+        }
+
+    </style>
+
+    <!-- SPELLS -->
+
+    <!-- load jquery -->
+
+
+    <script data-require="angular.js@1.2.0" data-semver="1.2.0" src="https://code.angularjs.org/1.2.0/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>
+    <script src="javascripts/core.js"></script>
+</head>
+<!-- SET THE CONTROLLER AND GET ALL TODOS -->
+<body ng-controller="mainController">
+
+<div class="container">
+<input type="text" id="store" style="width:1px;height:1px;display:hidden;">
+
+    <div class="row" style="background-color: transparent">
+        <div class="col-md-2 col-md-offset-9 col-sm-2 col-sm-offset-7 col-xs-4 col-xs-offset-6">
+            <a href="cart.html"> <h4 style="text-align: center;color: black;">My Cart</h4></a></div>
+        <div class="col-md-1 col-md-offset-0 col-sm-2 col-sm-offset-0 col-xs-2 col-xs-offset-0">
+            <a href="index3.html">  <h4 style="text-align: center;color: black;">Home</h4></a></div>
+    </div>
+    <!-- FORM TO CREATE TODOS -->
+    <div id="todo-form" class="row">
+        <div class="col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0 col-md-6 col-md-offset-3 text-center">
+            <form action="/" method="POST">
+                <img ng-src="{{file}}" class="image image-responsive" width="300px"/>
+                <div class="form-group">
+                    <input type="file" id="file-input" class="file" name="myimage" ng-model="file" accept="image/*" app-filereader>
+                    <div class="input-group col-sm-12 col-md-16">
+
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-picture"></i></span>
+                        <input type="text" class="form-control input-lg" disabled placeholder="Upload Image">
+                        <span class="input-group-btn">
+        <button class="browse btn btn-primary input-lg" type="button"><i class="glyphicon glyphicon-search"></i> Browse</button>
+      </span>
+                    </div>
+                </div>
+                <h6 style="text-align: right">*Optional</h6>
+                <div class="form-group">
+
+                    <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+                    <input type="text" ng-required="true" class="form-control input-lg text-center" placeholder="title of book" ng-model="formData.tittle">
+                </div>
+
+                <div class="form-group">
+
+                    <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+                    <input type="text" class="form-control input-lg text-center" placeholder="author" ng-model="formData.author">
+                </div>
+                <h6 style="text-align: right">*Optional</h6>
+                <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+
+
+                <div class="form-group">
+
+                    <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+                    <input type="number" ng-required="true" class="form-control input-lg text-center" placeholder="enter price you want" ng-model="formData.price">
+                </div>
+                <div class="form-group">
+
+                    <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+                    <input type="number" ng-required="true" min=1000000000 maxlength=9999999999 class="form-control input-lg text-center" placeholder="your contact number" ng-model="formData.contact">
+                </div>
+                <div class="form-group">
+                    <h4><span class="label" style="text-align: center;color: grey">Category of Book:</span>
+                        <select ng-model="formData.type">
+                            <option value="Engineering" style="text-align: center">Engineering</option>
+                            <option value="Management">Management</option>
+                            <option value="General Knowledge">General Knowledge</option>
+                            <option value="Competitive">Competitive Exams</option>
+                            <option value="Novel">Novels</option>
+                            <option value="Other">Others</option>
+                        </select>
+                    </h4>
+                </div>
+                <div class="form-group">
+
+                    <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+                    <input type="text" ng-required="true" class="form-control input-lg text-center" placeholder="your college name or location" ng-model="formData.location">
+                     </div>
+                <h6 style="text-align: right">*This would make easy for buyer to buy your book</h6>
+                <!--  <input type="file" class="file" name="myimage" ng-model="file" accept="image/*" app-filereader></input>
+                   -->   <!-- createToDo() WILL CREATE NEW TODOS -->
+                <button type="submit" class="btn btn-primary btn-lg" value="submit" ng-click="createTodo()">Submit</button>
+                <div>
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>
+<script>
+
+(() => {
+  document.getElementById("file-input").onchange = () => {
+//console.log("start");
+    const files = document.getElementById('file-input').files;
+    const file = files[0];
+    if(file != null){
+    getSignedRequest(file);
+}
+  };
+})();
+
+function getSignedRequest(file){
+//console.log("requested");
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', `/sign-s3?file-name=${encodeURIComponent(file.name)}&file-type=${file.type}`);
+//xhr.responseType = 'json';
+  xhr.onreadystatechange = () => {
+    if(xhr.readyState === 4){
+      if(xhr.status === 200){
+//console.log(xhr.responseText);
+        const response = JSON.parse(xhr.responseText);
+        uploadFile(file, response.signedRequest, response.url);
+      }
+      else{
+alert('Please select image again!');
+	}
+    }
+  };
+  xhr.send();
+}
+
+function uploadFile(file, signedRequest, url){
+  const xhr = new XMLHttpRequest();
+  xhr.open('PUT', signedRequest);
+  xhr.onreadystatechange = () => {
+    if(xhr.readyState === 4){
+      if(xhr.status === 200){
+        document.getElementById('store').value = url;
+      }
+      else{
+        alert('Could not upload file.');
+      }
+    }
+  };
+  xhr.send(file);
+}
+
+    $(document).on('click', '.browse', function(){
+        var file = $(this).parent().parent().parent().find('.file');
+        file.trigger('click');
+    });
+    $(document).on('change', '.file', function(){
+        $(this).parent().find('.form-control').val($(this).val().replace(/C:\\fakepath\\/i, ''));
+
+    });
+
+</script>
+</body>
+</html>
